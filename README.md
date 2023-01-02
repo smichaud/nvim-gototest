@@ -1,2 +1,3 @@
 # nvim-gototest
-Neovim plugin to navigate between test and source files.
+
+A basic Neovim plugin to navigate between test and source files.
