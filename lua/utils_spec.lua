@@ -1,0 +1,16 @@
+local utils = require("utils")
+
+describe("file_exists", function()
+    describe("given file exists", function()
+        it("should return true", function()
+            local current_filepath = debug.getinfo(1).source:sub(2)
+            assert.equals(utils.file_exists(current_filepath), true)
+        end)
+    end)
+
+    describe("given file does not exist", function()
+        it("should return false", function()
+            assert.equals(utils.file_exists("/home/fake/nonexistent_file.txt"), false)
+        end)
+    end)
+end)
