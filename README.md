@@ -46,15 +46,23 @@ nnoremap <leader>gt :GoToTest<CR>
 
 ## Usage
 
-Simply call the `GoToTest` command from a source file or a test file. If
-there is no existing configuration for the current project, you will be
-prompted with question to create it.
+Simply call the `GoToTestToggle` command from a source file or a test
+file. If there is no existing configuration for the current project, you
+will be prompted with question to create it.
 
 Note: the file extension is a
 [lua pattern](https://www.lua.org/pil/20.1.html).
+
+You can remove the current project/path configuration file using
+`GoToTestDeleteConfig`. Alternatively, all configuration files are
+located in `~/.local/share/nvim/gototest`, where the file name is the
+filepath with all slashes replaced by percent signs.
 
 ## Testing GoToTest Plugin
 
 Requires [plenary](https://github.com/nvim-lua/plenary.nvim).
 
 Simply run: `nvim --headless -c "PlenaryBustedDirectory lua/"`
+
+Note that this project goal is mostly for me to learn. Therefore it is
+not exhaustively tested.

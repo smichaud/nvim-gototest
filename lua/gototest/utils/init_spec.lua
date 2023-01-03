@@ -1,4 +1,4 @@
-local utils = require("utils")
+local utils = require("gototest.utils")
 
 describe("file_exists", function()
     describe("given file exists", function()
