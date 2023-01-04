@@ -4,8 +4,7 @@ local pattern_escape = require("gototest.utils").pattern_escape
 
 local function get_adjusted_test_dir(test_dir)
     if test_dir == "" then return test_dir end
-    if not require("gototest.utils").ends_with(test_dir, "/") then return test_dir .. "/" end
-    return test_dir
+    return require("gototest.utils").ensure_trailing_slash(test_dir)
 end
 
 local function decompose_test_file(config, filepath)

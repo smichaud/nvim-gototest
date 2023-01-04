@@ -11,12 +11,9 @@ local function get_default()
     }
 end
 
-local function get_filepath(working_dir)
-    local escaped_working_dir = string.gsub(working_dir, "/", "%%")
-    -- TODO: Add a setting to customize config directory
-    local user_home_dir = vim.fn.expand("$HOME")
-    local vim_home_dir = user_home_dir .. "/.config/nvim"
-    local config_filepath = vim_home_dir .. "/gototest/" .. escaped_working_dir
+local function get_filepath(config_storage_dir_path, project_dir)
+    local escaped_working_dir = string.gsub(project_dir, "/", "%%")
+    local config_filepath = config_storage_dir_path .. escaped_working_dir
 
     return config_filepath
 end

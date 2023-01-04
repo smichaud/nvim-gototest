@@ -18,6 +18,11 @@ local function ends_with(str, ending)
     return ending == "" or str:sub(- #ending) == ending
 end
 
+local function ensure_trailing_slash(text)
+    if not ends_with(text, "/") then return text .. "/" end
+    return text
+end
+
 local function shallow_copy(original)
     local original_type = type(original)
     local copy
@@ -27,6 +32,7 @@ local function shallow_copy(original)
     else
         copy = original
     end
+
     return copy
 end
 
@@ -34,5 +40,6 @@ utils.file_exists = file_exists
 utils.pattern_escape = pattern_escape
 utils.ends_with = ends_with
 utils.shallow_copy = shallow_copy
+utils.ensure_trailing_slash = ensure_trailing_slash
 
 return utils
