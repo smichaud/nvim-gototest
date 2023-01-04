@@ -28,15 +28,15 @@ local function prompt_user(config)
     local user_test_file_suffix = vim.fn.input("test file suffix: ", config.test_file_suffix)
     local user_extension_pattern = vim.fn.input("test file extension pattern: ", config.extension_pattern)
 
-    local escaped_config = {
+    local updated_config = {
         project_root = user_project_root,
-        test_dir = string.gsub(user_test_dir, "%.", "%%."),
-        test_file_prefix = string.gsub(user_test_file_prefix, "%.", "%%."),
-        test_file_suffix = string.gsub(user_test_file_suffix, "%.", "%%."),
+        test_dir = user_test_dir,
+        test_file_prefix = user_test_file_prefix,
+        test_file_suffix = user_test_file_suffix,
         extension_pattern = user_extension_pattern
     }
 
-    return escaped_config
+    return updated_config
 end
 
 local function write(filepath, config_table)

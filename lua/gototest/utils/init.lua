@@ -10,6 +10,10 @@ local function file_exists(name)
     end
 end
 
+local function pattern_escape(text)
+    return string.gsub(text, "%.", "%%.")
+end
+
 local function ends_with(str, ending)
     return ending == "" or str:sub(- #ending) == ending
 end
@@ -27,6 +31,7 @@ local function shallow_copy(original)
 end
 
 utils.file_exists = file_exists
+utils.pattern_escape = pattern_escape
 utils.ends_with = ends_with
 utils.shallow_copy = shallow_copy
 

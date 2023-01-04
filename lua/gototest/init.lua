@@ -14,7 +14,7 @@ local function get_config()
     local config_filepath = configuration.get_filepath(working_dir)
 
     if not require("utils").file_exists(config_filepath) then
-        print("GoToTest configuration file not found, create one? y/n")
+        print("Gototest configuration file not found, create one? y/n")
         local answer = vim.fn.getchar()
         local y_char_value = 121
         if answer == y_char_value then

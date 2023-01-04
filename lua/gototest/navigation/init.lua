@@ -1,5 +1,7 @@
 local navigation = {}
 
+local pattern_escape = require("gototest.utils").pattern_escape
+
 local function get_adjusted_test_dir(test_dir)
     if test_dir == "" then return test_dir end
     if not require("gototest.utils").ends_with(test_dir, "/") then return test_dir .. "/" end
@@ -8,35 +10,35 @@ end
 
 local function decompose_test_file(config, filepath)
     local adjusted_test_dir = get_adjusted_test_dir(config.test_dir)
-    local pattern = "(.*/)" .. adjusted_test_dir .. config.test_file_prefix .. "(.*)" .. config.test_file_suffix ..
-        "(%." .. config.extension_pattern .. ")$"
-    local root_path, bare_filename, extension = string.match(filepath, pattern)
+    local pattern = "(.*/)" .. adjusted_test_dir .. pattern_escape(config.test_file_prefix) .. "(.+)" ..
+        pattern_escape(config.test_file_suffix) .. "(%." .. config.extension_pattern .. ")$"
+    local base_path, bare_filename, extension = string.match(filepath, pattern)
 
-    return root_path, bare_filename, extension
+    return base_path, bare_filename, extension
 end
 
 local function decompose_source_file(filepath)
-    local extension = string.match(filepath, "%.[a-zA-Z0-9]+$")
-    local base_path, filename = string.match(filepath, "(.*/)(.*%" .. extension .. ")$")
-    return base_path, filename, extension
+    local base_path, bare_filename, extension = string.match(filepath, "(.-)([^\\/]-)(%.?[^%.\\/]*)$")
+
+    return base_path, bare_filename, extension
 end
 
 local function get_corresponding_filepath(config, filepath)
     local adjusted_test_dir = get_adjusted_test_dir(config.test_dir)
-    local root_path, bare_filename, extension = decompose_test_file(config, filepath)
 
-    local is_test_file = root_path and bare_filename and extension
+    local test_base_path, bare_filename, test_ext = decompose_test_file(config, filepath)
+    local is_test_file = test_base_path and bare_filename and test_ext
     if is_test_file then
-        local source_filepath = root_path .. bare_filename .. extension
+        local source_filepath = test_base_path .. bare_filename .. test_ext
 
         return source_filepath
     else
-        local base_path, filename, extension = decompose_source_file(filepath)
-        local is_valid_source_file = base_path and filename
+        local source_base_path, source_bare_filename, source_ext = decompose_source_file(filepath)
+        local is_valid_source_file = source_base_path and source_bare_filename and
+            string.match(source_ext, "%." .. config.extension_pattern)
         if is_valid_source_file then
-            filename = config.test_file_prefix .. filename
-            local test_filename = string.gsub(filename, extension, config.test_file_suffix .. extension)
-            local test_filepath = base_path .. adjusted_test_dir .. test_filename
+            local test_filepath = source_base_path .. adjusted_test_dir .. config.test_file_prefix ..
+                source_bare_filename .. config.test_file_suffix .. source_ext
 
             return test_filepath
         end
@@ -45,5 +47,6 @@ end
 
 navigation.get_corresponding_filepath = get_corresponding_filepath
 navigation.decompose_test_file = decompose_test_file
+navigation.decompose_source_file = decompose_source_file
 
 return navigation

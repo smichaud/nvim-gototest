@@ -1,3 +1,4 @@
+-- TODO: Should I add some e2e tests?
 local gototest = require("gototest")
 
 -- describe("default config", function()

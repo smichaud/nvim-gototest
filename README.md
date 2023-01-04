@@ -29,24 +29,24 @@ Using Vimscript
 lua require("gototest").setup()
 ```
 
-You should now have access to the the `GoToTest` command. There is no
+You should now have access to the the `Gototest` command. There is no
 predefined mapping, you can add your own:
 
 Using Lua:
 
 ``` lua
-vim.api.nvim_set_keymap("n", "<leader>gt", ":call GoToTest()<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>gt", ":GototestToggle()<CR>", {})
 ```
 
 Using Vimscript
 
 ``` vimscript
-nnoremap <leader>gt :GoToTest<CR>
+nnoremap <leader>gt :GototestToggle<CR>
 ```
 
 ## Usage
 
-Simply call the `GoToTestToggle` command from a source file or a test
+Simply call the `GototestToggle` command from a source file or a test
 file. If there is no existing configuration for the current project, you
 will be prompted with question to create it.
 
@@ -58,7 +58,7 @@ You can remove the current project/path configuration file using
 located in `~/.local/share/nvim/gototest`, where the file name is the
 filepath with all slashes replaced by percent signs.
 
-## Testing GoToTest Plugin
+## Testing Gototest Plugin
 
 Requires [plenary](https://github.com/nvim-lua/plenary.nvim).
 
